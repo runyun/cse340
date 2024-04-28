@@ -1,0 +1,21 @@
+@media screen and (min-width: 700px) {
+    #hero section {
+        grid-column: 1/2;
+        position: relative;
+        left: 100px;
+        top: 50px;
+        width: 70%;
+        font-size: x-large;
+    } 
+    #hero img {
+        width: 70%;
+    }
+    #hero-msg button{
+        padding: 1rem;
+        font-size: x-large;
+    }
+    #home {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

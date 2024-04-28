@@ -1,6 +1,118 @@
-/******* Change Box Model ***************/
+/* ****** Change Box Model **************
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+} */
+:root {
+  --heading-font: "Russo One", sans-serif;
+  --paragraph-font: "Dosis", sans-serif;
+  --primary-color: #ffee93;
+  --secondary-color: #b9314f;
+  --backgroud-color: #FCF6FF;
+}
+
+body {
+  font-family: var(--paragraph-font);
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1rem;  
+}
+
+header {
+  padding: 1rem;
+}
+
+nav {
+  background-color: var(--primary-color);
+  padding: 1rem;
+}
+
+h1, h2 {
+  font-family: var(--heading-font);
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+#top-header a {
+  text-decoration: none;
+  color: black;
+}
+
+#top-header .siteName a:first-child {
+  font-size: xx-large;
+}
+
+nav ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style-type: none;
+  padding: 0;
+}
+
+#hero {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#hero div {
+  grid-column: 1/4;
+  grid-row: 1/3;
+  z-index: -1;
+  text-align: center;
+}
+
+#hero section {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
+#hero img {
+  width: 100%;
+}
+
+#hero-msg {
+  background-color: rgba(255, 238, 147, .7);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+#hero-msg button{
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+#home {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+#home li {
+  padding: 1rem;
+}
+
+#upgrades {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+  gap: 1rem;
+}
+
+#upgrades div {
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px gray;
+}
+
+#upgrades a {
+  display: block;
 }

@@ -116,3 +116,49 @@ nav ul{
 #upgrades a {
   display: block;
 }
+
+.item-detail {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.item-detail img, #inv-display img {
+  width: 100%;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px gray;
+}
+
+.item-detail div {
+  margin-top: 2rem;
+}
+
+#inv-display {
+  position: relative;
+  right: 30px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+#inv-display a {
+  text-align: center;
+}
+#inv-display li {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#inv-display img {
+  width: 90%;
+  margin: 0 auto;
+}
+#inv-display div {
+  height: 150px;
+}
+
+.detail-title {
+  color: var(--secondary-color);
+  font-size: larger;
+  font-weight: bolder;
+}

@@ -40,7 +40,7 @@ Util.buildClassificationGrid = async function(data){
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
       + 'details"><img src="' + vehicle.inv_thumbnail 
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-      +' on CSE Motors" /></a>'
+      +' on CSE Motors"></a>'
       grid += '<div class="namePrice">'
       grid += '<hr />'
       grid += '<h2>'
@@ -58,6 +58,24 @@ Util.buildClassificationGrid = async function(data){
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
+}
+
+Util.buildItemGrid = async function(data){
+  let grid;
+  data = data.rows[0];
+
+  grid = '<div class="item-detail">';
+    grid += `<img src="${data.inv_image}" alt="Image of ${data.inv_make} ${data.inv_model}">`;
+    grid += `<div>
+      <p><span class="detail-title">Year:</span> ${data.inv_year}</p>
+      <p><span class="detail-title">Price:</span> ${Number(data.inv_price).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</p>
+      <p><span class="detail-title">Description:</span> ${data.inv_description}</p>
+      <p><span class="detail-title">Color:</span> ${data.inv_color}</p>
+      <p><span class="detail-title">Miles:</span> ${data.inv_miles.toLocaleString()}</p>`;
+    grid += '</div>';
+  grid += '</div>';
+
+  return grid;
 }
 
 /* ****************************************

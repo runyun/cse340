@@ -162,3 +162,8 @@ nav ul{
   font-size: larger;
   font-weight: bolder;
 }
+
+form label {
+  display: block;
+  margin-top: 1rem;
+}

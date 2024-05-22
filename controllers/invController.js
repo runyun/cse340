@@ -1,6 +1,8 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities")
 
+const calssificationModel = require('../models/classification-model')
+
 const invCont = {}
 
 /* ***************************
@@ -32,5 +34,50 @@ invCont.buildByInvId = async function(req, res, next) {
     grid
   })
 }
+
+invCont.buildManagement = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./inventory/management", {
+    title: "Vehicle Management",
+    nav,
+  })
+}
+
+invCont.buildAddClassification = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./inventory/add-classification", {
+    title: "Add New Classification",
+    nav,
+    errors: null,
+  })
+}
+
+invCont.calssification = async function(req, res) {
+  let nav = await utilities.getNav()
+  const { classification_name } = req.body
+
+  const regResult = await calssificationModel.insertClassification(classification_name)
+
+  if (regResult) {
+    nav = await utilities.getNav()
+    req.flash(
+      "notice",
+      `Congratulations, you\'re successfullly added a new class.`
+    )
+    res.status(201).render("./inventory/management", {
+      title: "Vehicle Management",
+      nav,
+    })
+
+  } else {
+    req.flash("notice", "Sorry, the login failed.")
+    res.status(501).render("./inventory/add-classification", {
+      title: "Add classification",
+      nav,
+      errors: null,
+    })
+  }
+}
+
 
 module.exports = invCont

@@ -163,7 +163,42 @@ nav ul{
   font-weight: bolder;
 }
 
+form {
+  margin-left: .5rem;
+}
+
 form label {
   display: block;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  position: relative;
+  left: 2rem
+}
+
+form input, select, textarea {
+  padding: .5rem;
+  border-radius: 1rem;
+  font-size: larger;
+  width: 90%;
+  display: block;
+}
+
+input[type='submit']{
+  display: block;
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  font-size: larger;
+  border: none;
+  margin-top: 2rem;
+  width: 60%;
+}
+
+input[type='submit']:hover{
+  background-color: #810722;
+}
+
+.important-p{
+  font-size: larger;
+  color: var(--secondary-color);
 }

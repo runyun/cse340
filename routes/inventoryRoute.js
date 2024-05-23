@@ -22,5 +22,14 @@ router.post(
     utilities.handleErrors(invController.calssification)
 )
 
+router.get('/add-inventory', utilities.handleErrors(invController.buildAddInventory));
+
+router.post(
+    "/add-inventory",
+    validate.inventoryRules(),
+    validate.checkInventoryData,
+    utilities.handleErrors(invController.inventory)
+)
+
 module.exports = router
     

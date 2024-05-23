@@ -25,4 +25,15 @@
     .item-detail img {
         width: 90%;
     }
+    
+    form {
+        margin-left: 2rem;
+    }
+    form input, select, textarea {
+        width: 50%;
+    }
+
+    input[type='submit']{
+        width: 30%;
+    }
 }

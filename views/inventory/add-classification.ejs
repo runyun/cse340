@@ -12,7 +12,8 @@
 
 
 <form id="classificationForm" action="/inv/add-classification" method="post">
-    <label for="classification_name"></label>
-    <input type="text" name="classification_name" id="classification_name" required pattern="[a-zA-Z]+$">
-    <button type="submit">Add Classification</button>
+    <label for="classification_name">Classification name</label>
+    <input type="text" name="classification_name" id="classification_name" required pattern="[a-zA-Z]+$" value="<%= locals.classification_name %>">
+
+    <input type="submit" value="Add Classification">
 </form>

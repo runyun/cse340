@@ -64,7 +64,6 @@ Util.buildClassificationGrid = async function(data){
 
 Util.buildItemGrid = async function(data){
   let grid;
-  data = data.rows[0];
 
   grid = '<div class="item-detail">';
     grid += `<img src="${data.inv_image}" alt="Image of ${data.inv_make} ${data.inv_model}">`;

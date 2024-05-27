@@ -198,6 +198,11 @@ input[type='submit']:hover{
   background-color: #810722;
 }
 
+input[type='submit']:disabled {
+  color: white;
+  background-color: gray;
+}
+
 .important-p{
   font-size: larger;
   color: var(--secondary-color);

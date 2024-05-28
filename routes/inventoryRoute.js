@@ -11,9 +11,9 @@ router.get('/type/:classificationId', utilities.handleErrors(invController.build
 // Route to build item by inventory id 
 router.get('/detail/:invId', utilities.handleErrors(invController.buildByInvId));
 
-router.get('/', utilities.handleErrors(invController.buildManagement));
+router.get('/', utilities.isAuthorizedAccount, utilities.handleErrors(invController.buildManagement));
 
-router.get('/add-classification', utilities.handleErrors(invController.buildAddClassification));
+router.get('/add-classification', utilities.isAuthorizedAccount, utilities.handleErrors(invController.buildAddClassification));
 
 router.post(
     "/add-classification",
@@ -22,7 +22,7 @@ router.post(
     utilities.handleErrors(invController.calssification)
 )
 
-router.get('/add-inventory', utilities.handleErrors(invController.buildAddInventory));
+router.get('/add-inventory', utilities.isAuthorizedAccount, utilities.handleErrors(invController.buildAddInventory));
 
 router.post(
     "/add-inventory",
@@ -33,14 +33,14 @@ router.post(
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
-router.get('/edit/:inv_id', utilities.handleErrors(invController.editInventoryView));
+router.get('/edit/:inv_id', utilities.isAuthorizedAccount, utilities.handleErrors(invController.editInventoryView));
 
 router.post("/update/", 
     validate.inventoryRules(),
     validate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory));
 
-router.get('/delete/:inv_id', utilities.handleErrors(invController.deleteInventoryView));
+router.get('/delete/:inv_id', utilities.isAuthorizedAccount, utilities.handleErrors(invController.deleteInventoryView));
 
 router.post("/delete/", utilities.handleErrors(invController.deleteInventory));
 

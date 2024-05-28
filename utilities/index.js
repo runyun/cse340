@@ -142,6 +142,13 @@ Util.checkLogin = (req, res, next) => {
     return res.redirect("/account/login")
   }
 }
- 
+
+Util.isAuthorizedAccount = (req, res, next) => {
+  const accountType = res.locals.accountData.account_type
+  if(accountType == 'Client'){
+    return res.redirect("/account/login")
+  } 
+  next()
+}
 
 module.exports = Util

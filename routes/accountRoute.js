@@ -54,4 +54,15 @@ router.get(
     utilities.handleErrors(accountController.logout)
 )
 
+router.get('/updateAccountType', 
+    utilities.isAdminAccount,
+    utilities.handleErrors(accountController.buildAccountType))
+
+router.post(
+    "/updateAccountType",
+    regValidate.accountUpdateTypeRules(),
+    regValidate.checkAccountTypeUpdateData,
+    utilities.handleErrors(accountController.updateAccountType)
+)
+
 module.exports = router

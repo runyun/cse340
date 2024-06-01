@@ -35,9 +35,7 @@ async function checkExistingEmail(account_email){
 async function getAccountByEmail (account_email) {
   try {
     const result = await pool.query(
-      // 'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1',
-      // [account_email]
-      'select account_id, account_firstname, account_lastname, account_email, account_password, type_name as account_type from account_type as a inner join account as b on a.type_id = b.account_type WHERE account_email = $1',
+      'SELECT account_id, account_firstname, account_lastname, account_email, account_password, type_name AS account_type FROM account_type AS a INNER JOIN account AS b ON a.type_id = b.account_type WHERE account_email = $1',
       [account_email]
     )
     return result.rows[0]
@@ -50,7 +48,7 @@ async function getAccountByEmail (account_email) {
 async function getAccountById (account_id) {
   try {
     const result = await pool.query(
-      'select account_id, account_firstname, account_lastname, account_email, account_password, type_name as account_type from account_type as a inner join account as b on a.type_id = b.account_type WHERE account_id = $1',
+      'SELECT account_id, account_firstname, account_lastname, account_email, account_password, type_name AS account_type FROM account_type AS a INNER JOIN account AS b ON a.type_id = b.account_type WHERE account_id = $1',
       [account_id])
     return result.rows[0]
 
@@ -84,4 +82,39 @@ async function updatePassword (account_id, account_password) {
 }
 
 
-module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword}
+async function getAccountsExcept(account_id) {
+  try {
+    const result = await pool.query(
+      'SELECT account_id, account_firstname, account_lastname FROM account WHERE account_id <> $1', [account_id])
+    return result.rows
+
+  } catch (error) {
+    return error.message
+  }
+}
+
+async function getAccountType() {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM account_type')
+    return result.rows
+
+  } catch (error) {
+    return error.message
+  }
+}
+
+async function updateAccountType (account_id, type_id) {
+  try {
+    const result = await pool.query(
+      'UPDATE public.account SET account_type = $1 WHERE account_id = $2 RETURNING *',
+      [type_id, account_id])
+    return result.rows[0]
+
+  } catch (error) {
+    return error.message
+  }
+}
+
+
+module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword, getAccountsExcept, getAccountType, updateAccountType}

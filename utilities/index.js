@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accountModel = require("../models/account-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -149,6 +150,61 @@ Util.isAuthorizedAccount = (req, res, next) => {
     return res.redirect("/account/login")
   } 
   next()
+}
+
+Util.isAdminAccount = (req, res, next) => {
+  const accountType = res.locals.accountData.account_type
+  if(accountType != 'Admin'){
+    return res.redirect("/account/login")
+  } 
+  next()
+}
+
+Util.buildAccountList = async function (login_id = null, account_id = null) {
+
+  let data = await accountModel.getAccountsExcept(login_id)
+
+  let accountList =
+    '<select name="account_id" id="account_id" required>'
+  accountList += "<option value=''>Choose an account</option>"
+  data.forEach((row) => {
+    accountList += '<option value="' + row.account_id + '"'
+
+  if (
+      account_id != null &&
+      row.account_id == account_id
+    ) {
+      accountList += " selected "
+    }
+
+    accountList += ">" + row.account_firstname + " " + row.account_lastname + "</option>"
+  })
+
+  accountList += "</select>"
+  return accountList
+}
+
+Util.buildAccountTypeList = async function (type_id = null) {
+
+  let data = await accountModel.getAccountType()
+  let accountTypeList =
+    '<select name="type_id" id="type_id" required>'
+  accountTypeList += "<option value=''>Choose a type</option>"
+  data.forEach((row) => {
+    accountTypeList += '<option value="' + row.type_id + '"'
+
+    if (
+      type_id != null &&
+      row.type_id == type_id
+    ) {
+      accountTypeList += " selected "
+    }
+
+    accountTypeList += ">" + row.type_name + "</option>"
+  })
+
+  accountTypeList += "</select>"
+  return accountTypeList
 }
 
 module.exports = Util

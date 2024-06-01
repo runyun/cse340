@@ -109,7 +109,7 @@ async function login(req, res) {
 /* ****************************************
  *  Process login request
  * ************************************ */
-async function accountLogin(req, res) {
+async function accountLogin(req, res, next) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
@@ -140,12 +140,15 @@ async function accountLogin(req, res) {
       }
 
       return res.redirect("/account/")
+    }else {
+
+      req.flash("notice", "Login faild! Email or Password not correct.")
+      return res.redirect("/account/login")
     }
     
   } catch (error) {
     return new Error('Access Forbidden')
   }
-  
  }
 
 async function buildAccountManagement(req, res, next) {
@@ -174,7 +177,6 @@ async function buildAccountEdit(req, res, next) {
 }
 
 async function updateAccount(req, res, next) {
-  const nav = await utilities.getNav()
   const {account_id, account_firstname, account_lastname, account_email } = req.body
 
   const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname,account_email)
@@ -231,5 +233,37 @@ async function logout(req, res, next) {
   res.redirect('/')
 }
 
+async function buildAccountType(req, res, next) {
+  let nav = await utilities.getNav()
+  let accountTypeList = await utilities.buildAccountTypeList()
+  let accountList = await utilities.buildAccountList(res.locals.accountData.account_id)
 
-module.exports = { buildLogin, buildRegister, registerAccount, login, accountLogin, buildLoginManagement: buildAccountManagement, buildAccountEdit, updateAccount, updatePassword, logout}
+  res.render("account/edit-type", {
+    title: "Edit Account Type",
+    nav,
+    errors: null,
+    accountTypeList,
+    accountList
+  })
+}
+
+async function updateAccountType(req, res, next) {
+  const {account_id, type_id} = req.body
+
+  const updateResult = await accountModel.updateAccountType(account_id, type_id)
+
+  if (updateResult) {
+
+    req.flash("notice", `The account type was successfully updated.`)
+    res.redirect("/account/")
+
+  } else {
+    
+    req.flash("notice", "Sorry, the update failed.")
+    res.redirect("/account/")
+  }
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, login, accountLogin,
+   buildLoginManagement: buildAccountManagement, buildAccountEdit, updateAccount,
+   updatePassword, logout, buildAccountType, updateAccountType}

@@ -1,0 +1,24 @@
+<h1>
+    <%= title %>
+</h1>
+
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+   </ul>
+<% } %>
+
+<form action="/account/updateAccountType" method="post">
+    <p class="important-p">All fields are required.</p>
+    <p>Select an account</p>
+    <%- accountList %>
+
+    <p>Select the type</p>
+    <%- accountTypeList %>
+    
+    <input type="submit" value="Change type">
+</form>

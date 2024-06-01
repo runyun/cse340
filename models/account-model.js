@@ -5,7 +5,8 @@ const pool = require("../database/")
 * *************************** */
 async function registerAccount(account_firstname, account_lastname, account_email, account_password){
     try {
-      const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *"
+      // account_type default to the number 1, refer to 'Client' type
+      const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 1) RETURNING *"
 
       return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password])
 
@@ -34,8 +35,11 @@ async function checkExistingEmail(account_email){
 async function getAccountByEmail (account_email) {
   try {
     const result = await pool.query(
-      'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1',
-      [account_email])
+      // 'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1',
+      // [account_email]
+      'select account_id, account_firstname, account_lastname, account_email, account_password, type_name as account_type from account_type as a inner join account as b on a.type_id = b.account_type WHERE account_email = $1',
+      [account_email]
+    )
     return result.rows[0]
 
   } catch (error) {
@@ -46,7 +50,7 @@ async function getAccountByEmail (account_email) {
 async function getAccountById (account_id) {
   try {
     const result = await pool.query(
-      'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_id = $1',
+      'select account_id, account_firstname, account_lastname, account_email, account_password, type_name as account_type from account_type as a inner join account as b on a.type_id = b.account_type WHERE account_id = $1',
       [account_id])
     return result.rows[0]
 
